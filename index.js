@@ -12,10 +12,24 @@ app.listen(port, () => {
   console.log(`app is listening on port ${port} `);
 });
 
+// app.get("/ig/:username",(req,res)=>{
+//     const followers =["adam", "bob", "aman"]
+//     let {username}= req.params;
+//     res.render("instagram.ejs" ,{username, followers})
+// })
+
 app.get("/ig/:username",(req,res)=>{
-    const followers =["adam", "bob", "aman"]
-    let {username}= req.params;
-    res.render("instagram.ejs" ,{username, followers})
+    let {username} = req.params;
+    const instaData = require("./data.json")
+    const data = instaData[username];
+    // console.log(instaData)
+    // console.log(data);
+    if(data){
+        res.render("instagram.ejs",{data})
+    }
+   else{
+    res.render("error.ejs")
+   }
 })
 
 app.get("/rollDice", (req, res) => {
